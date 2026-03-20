@@ -19,7 +19,7 @@ jobs:
       - name: Checkout app repo at specific commit
         uses: actions/checkout@v4
         with:
-          repository: your-org/${{ inputs.app_name }}
+          repository: madhan-kumar-revature/${{ inputs.app_name }}
           ref: ${{ inputs.commit_sha }}
 
       - name: Listing Files
