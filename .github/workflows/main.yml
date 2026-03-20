@@ -34,8 +34,8 @@ jobs:
       - name: Checkout app repo
         uses: actions/checkout@v4
         with:
-          repository: madhan-kumar-revature/${{ env.APP_NAME }}
-          ref: ${{ env.COMMIT_SHA }}
+          repository: madhan-kumar-revature/${{ inputs.app_name || github.event.client_payload.app_name }}
+          ref: ${{ inputs.commit_sha || github.event.client_payload.commit_sha }}
 
       - name: Listing Files
         run: ls -al
