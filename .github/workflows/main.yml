@@ -1,5 +1,5 @@
 name: Deploy Service
-run-name: ${{ github.event.inputs.app_name }} || ${{ github.event.inputs.commit_sha }}
+run-name: ${{ inputs.app_name }} @ ${{ inputs.commit_sha }}
 
 on:
   workflow_call:
