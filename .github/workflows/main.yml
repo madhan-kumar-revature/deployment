@@ -1,5 +1,5 @@
 name: Deploy Service
-run-name: ${{ github.event.client_payload.commit_sha }}
+run-name: ${{ github.event.client_payload.app_name }} || ${{ github.event.client_payload.commit_sha }}
 
 on:
   repository_dispatch:
