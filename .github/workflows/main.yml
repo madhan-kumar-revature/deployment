@@ -1,5 +1,4 @@
 name: Deploy Service
-
 run-name: ${{ github.event.client_payload.commit_sha }}
 
 on:
@@ -9,7 +8,6 @@ on:
 jobs:
   Build:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout app repo
         uses: actions/checkout@v4
@@ -17,22 +15,18 @@ jobs:
           repository: madhan-kumar-revature/${{ github.event.client_payload.app_name }}
           ref: ${{ github.event.client_payload.commit_sha }}
 
-      - name: Build
-        run: echo "Building..."
+      - run: echo "Building..."
 
   Deploy-Dev:
     runs-on: ubuntu-latest
-    if: github.event.client_payload.environment == 'dev'
     needs: Build
-    environment:
-      name: Dev
+    if: github.event.client_payload.deploy_dev == true
     steps:
       - run: echo "Deploying to Dev"
 
   Deploy-QA:
     runs-on: ubuntu-latest
-    if: github.event.client_payload.environment == 'qa'
-    environment:
-      name: Qa
+    needs: Deploy-Dev   # or Build (your choice)
+    if: github.event.client_payload.deploy_qa == true
     steps:
       - run: echo "Deploying to QA"
