@@ -49,7 +49,6 @@ jobs:
     runs-on: ubuntu-latest
     needs: Build-Qa
     if: github.event.client_payload.deploy_qa == true
-    environment: Qa
     steps:
       - run: echo "Deploying to QA"
 
@@ -65,7 +64,6 @@ jobs:
     name: Staging Deploy
     runs-on: ubuntu-latest
     needs: Build-Staging
-    environment: Staging
     steps:
       - run: echo "Deploying to Staging"
 
@@ -81,6 +79,5 @@ jobs:
     name: Prod Deploy
     runs-on: ubuntu-latest
     needs: Build-Prod
-    environment: Prod
     steps:
       - run: echo "Deploying to Prod"
