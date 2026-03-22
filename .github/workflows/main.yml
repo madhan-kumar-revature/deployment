@@ -18,25 +18,34 @@ jobs:
       - run: echo "Building..."
 
   Build-Dev:
-    name: Build to Dev
+    name: Dev Build
     runs-on: ubuntu-latest
     needs: Build
     if: github.event.client_payload.deploy_dev == true
     environment: Dev
     steps:
-      - run: echo "Deploying to Dev"
-      
+      - run: echo "Building for Dev"
+
   Deploy-Dev:
-      name: Deploy to Dev
-      runs-on: ubuntu-latest
-      needs: Build-Dev
-      if: github.event.client_payload.deploy_dev == true
-      environment: Dev
-      steps:
-        - run: echo "Deploying to Dev"     
+    name: Dev Deploy
+    runs-on: ubuntu-latest
+    needs: Build-Dev
+    if: github.event.client_payload.deploy_dev == true
+    environment: Dev
+    steps:
+      - run: echo "Deploying to Dev"
+
+  Build-Qa:
+    name: Qa Build
+    runs-on: ubuntu-latest
+    needs: Build-Dev
+    if: github.event.client_payload.deploy_qa == true
+    environment: Qa
+    steps:
+      - run: echo "Building for QA"
 
   Deploy-Qa:
-    name: Deploy to Qa
+    name: Qa Deploy
     runs-on: ubuntu-latest
     needs: Build-Dev
     if: github.event.client_payload.deploy_qa == true
@@ -44,19 +53,34 @@ jobs:
     steps:
       - run: echo "Deploying to QA"
 
-  Deploy-Staging:
-    name: Deploy to Staging
+  Build-Staging:
+    name: Staging Build
     runs-on: ubuntu-latest
-    needs: Deploy-Qa
+    needs: Build-Qa
+    environment: Staging
+    steps:
+      - run: echo "Building for Staging"
+
+  Deploy-Staging:
+    name: Staging Deploy
+    runs-on: ubuntu-latest
+    needs: Build-Staging
     environment: Staging
     steps:
       - run: echo "Deploying to Staging"
 
-  Deploy-Prod:
-    name: Deploy to Prod
+  Build-Prod:
+    name: Prod Build
     runs-on: ubuntu-latest
-    needs: Deploy-Staging
+    needs: Build-Staging
+    environment: Prod
+    steps:
+      - run: echo "Building for Prod"
+
+  Deploy-Prod:
+    name: Prod Deploy
+    runs-on: ubuntu-latest
+    needs: Build-Prod
     environment: Prod
     steps:
       - run: echo "Deploying to Prod"
-      
